@@ -1,0 +1,29 @@
+int ledamarillo = 6;
+int ledazul = 7;
+int dt = 500;
+int yellow = 3;
+int red = 5;
+int i;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(ledamarillo, OUTPUT);
+  pinMode(ledazul, OUTPUT);
+}
+
+void loop() {
+  
+  for (i=1;i<=yellow;i=i+1 ){
+    digitalWrite(ledamarillo, HIGH);
+    delay(dt);
+    digitalWrite(ledamarillo, LOW);
+    delay(dt);
+  }
+
+  for (i=1; i<=red; i=i+1 ){
+    digitalWrite(ledazul, HIGH);
+    delay(dt);
+    digitalWrite(ledazul, LOW);
+    delay(dt);
+  }
+}
