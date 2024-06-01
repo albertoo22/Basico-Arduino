@@ -1,0 +1,80 @@
+// Pines del Arduino conectados a las entradas A, B, C, D del 74LS247
+const int pinA = 2;
+const int pinB = 3;
+const int pinC = 4;
+const int pinD = 5;
+
+// Pines del Arduino conectados a las bases de los transistores
+const int digit1 = 7;
+const int digit2 = 8;
+const int digit3 = 9;
+const int digit4 = 10;
+
+// Retardo entre la multiplexación de dígitos
+const int multiplexDelay = 5;
+
+// Array de números a mostrar en el display (por ejemplo: 1234)
+int numbers[] = {1, 2, 3, 4};
+
+// Número de dígitos
+const int numDigits = 4;
+
+void setup() {
+  // Configurar pines del 74LS247 como salidas
+  pinMode(pinA, OUTPUT);
+  pinMode(pinB, OUTPUT);
+  pinMode(pinC, OUTPUT);
+  pinMode(pinD, OUTPUT);
+
+  // Configurar pines de los transistores como salidas
+  pinMode(digit1, OUTPUT);
+  pinMode(digit2, OUTPUT);
+  pinMode(digit3, OUTPUT);
+  pinMode(digit4, OUTPUT);
+}
+
+void loop() {
+  // Multiplexar los dígitos
+  for (int i = 0; i < numDigits; i++) {
+    // Seleccionar el dígito actual
+    selectDigit(i);
+
+    // Mostrar el número en el dígito actual
+    showNumber(numbers[i]);
+
+    // Retardo de multiplexación
+    delay(multiplexDelay);
+  }
+}
+
+// Función para seleccionar el dígito actual
+void selectDigit(int digit) {
+  digitalWrite(digit1, LOW);
+  digitalWrite(digit2, LOW);
+  digitalWrite(digit3, LOW);
+  digitalWrite(digit4, LOW);
+
+  switch (digit) {
+    case 0:
+      digitalWrite(digit1, HIGH);
+      break;
+    case 1:
+      digitalWrite(digit2, HIGH);
+      break;
+    case 2:
+      digitalWrite(digit3, HIGH);
+      break;
+    case 3:
+      digitalWrite(digit4, HIGH);
+      break;
+  }
+}
+
+// Función para mostrar un número en el display de 7 segmentos
+void showNumber(int num) {
+  // Convertir el número a BCD
+  digitalWrite(pinA, num & 0x01);
+  digitalWrite(pinB, (num >> 1) & 0x01);
+  digitalWrite(pinC, (num >> 2) & 0x01);
+  digitalWrite(pinD, (num >> 3) & 0x01);
+}
