@@ -1,0 +1,34 @@
+#led+potenciometro. Si el Potenciometro supera el valor 1000, el led se prende, de lo contrario, permanece apagado.
+
+int alerta = 7;
+int potenciometro = A0;
+int dt = 500;
+int i;
+int maximo = 1000;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(alerta, OUTPUT);
+  pinMode(potenciometro, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  
+  i = analogRead(potenciometro);
+  Serial.println(i);
+  delay(dt);
+
+  while (i>maximo){
+    digitalWrite(alerta, HIGH);
+    Serial.println(i);
+    i=analogRead(potenciometro); #obligatorio para que el valor de i se vaya actualizando y pueda pasar al segundo while 
+    delay(dt);
+  }
+  while (i<maximo){
+    digitalWrite(alerta, LOW);
+    Serial.println(i);
+    i=analogRead(potenciometro); #obligatorio para que el valor de i se vaya actualizando y pueda pasar al primer while
+    delay(dt);
+  }
+}
